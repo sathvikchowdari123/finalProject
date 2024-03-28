@@ -1,0 +1,90 @@
+.login-body{
+  
+  width:100%;
+  background-repeat: no-repeat;
+
+}
+.wave-img {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  z-index: -1;
+}
+.mobile-svg{
+  width:30%;
+  height:auto;
+  fill:blue;
+}
+.login-form{
+display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  height:100vh;
+}
+form {
+  width: 70%;
+}
+
+.login-form .icon {
+  height:10vh;
+  color:rgb(49, 117, 206)
+}
+
+.login-form h2 {
+  margin: 15px 0;
+  color: #333;
+  text-transform: uppercase;
+  font-size: 2.0rem;
+}
+
+/* adduser css */
+.user-container{
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      
+}
+.custom-card {
+  background-color: rgb(46, 86, 219);
+  border-radius: 6px;
+  color: white;
+  text-align: center;
+}
+
+.custom-card .form-control {
+  background-color: white;
+  color: blue;
+}
+.custom-card .user-icon {
+ height:10vh;
+}
+
+
+.custom-card .btn-primary {
+  background-color: white;
+  color: blue;
+  border-color: blue;
+}
+
+/* Navbar css */
+.navbar{
+  background-color:rgb(46, 86, 219);
+  color:white;
+  border-radius:10px;
+}
+.navbar a{
+  color:white;
+}
+.navbar-toggler-icon{
+  color:white;
+ 
+}
+.navbar-middle{
+  display: flex;
+  justify-content:space-evenly;
+}
