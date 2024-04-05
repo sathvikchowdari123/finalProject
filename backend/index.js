@@ -6,6 +6,17 @@ import loginRouter from "./routes/login.js";
 import User from "./models/user.js";
 import passwordResetRouter from "./routes/passwordreset.js";
 import changePasswordRouter from "./routes/changePassword.js";
+import eventRegisterRouter from "./routes/registerEvent.js";
+import fetchEventRouter from "./routes/fetchEvents.js";
+import userEventRegisterRouter from "./routes/userEventRegistration.js";
+import fetchEventRegisteredRouter from "./routes/fetchEventsRegistered.js";
+import addresourceRouter from "./routes/addResource.js";
+import fetchResourceRouter from "./routes/fetchReources.js";
+import eventUpdateRouter from "./routes/updateEvent.js";
+import likeRouter from "./routes/likesRouter.js";
+import fetchlikesRouter from "./routes/fetchLikes.js";
+import interestedNotificationRouter from "./routes/interestedNotification.js";
+import eventDeleteRouter from "./routes/deleteEvent.js";
 const app = express();
 app.use(cors())
 app.use(express.json());
@@ -35,6 +46,17 @@ app.use('/login', loginRouter);
 app.use('/adduser', adduserRouter);
 app.use('/reset-password', passwordResetRouter);
 app.use('/change-password/:id', changePasswordRouter);
+app.use('/event-register', eventRegisterRouter);
+app.use('/fetch-events', fetchEventRouter);
+app.use('/user/event-register', userEventRegisterRouter)
+app.use('/fetch-events-registered', fetchEventRegisteredRouter)
+app.use('/add-resource', addresourceRouter)
+app.use('/fetch-resources', fetchResourceRouter)
+app.use('/event-update', eventUpdateRouter);
+app.use('/event-liked', likeRouter)
+app.use('/fetch-events-liked', fetchlikesRouter);
+app.use('/liked-notification-interested', interestedNotificationRouter);
+app.use('/event-delete', eventDeleteRouter);
 app.listen(3001, () => {
   console.log(`Server is running on port 3001`);
 });

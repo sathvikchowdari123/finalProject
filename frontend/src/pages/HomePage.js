@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useState } from 'react';
 import EventsPage from '../components/EventsPage';
+import ResourcesPage from '../components/ResourcesPage';
 const HomePage = () => {
   const { role } = useParams();
    const [selectedField, setSelectedField] = useState('events');
@@ -10,7 +11,8 @@ const HomePage = () => {
     switch (selectedField) {
       case 'events':
         return <EventsPage />;
-     
+      case 'resources':
+        return <ResourcesPage/>
       default:
         return null;
     }

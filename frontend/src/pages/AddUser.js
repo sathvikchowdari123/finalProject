@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const AddUser = () => {
   const [firstname, setFirstName] = useState('');
   const [lastname, setLastName] = useState('');
@@ -16,7 +18,7 @@ const AddUser = () => {
 
 
 
-    // Perform validation if necessary
+    
     if (!firstname || !lastname || !email || !password || !username || !role) {
       // Handle validation error (e.g., display error message)
       console.log('All fields are required');
@@ -27,11 +29,18 @@ const AddUser = () => {
       // Send data to the server (assuming you're using Axios)
       const response = await axios.post('http://localhost:3001/adduser', { firstname, lastname, email, password, username, role });
       console.log('User added successfully:', response.data);
+      toast.success('user added successfully')
 
       
     } catch (error) {
       // Handle error (e.g., display error message)
-      console.error('Error adding user:', error);
+      if (error.response && error.response.status === 400) {
+        toast.error('user already exist');
+        
+      } else {
+        console.error('error adding user', error.message);
+      }
+      
     }
   };
     return (

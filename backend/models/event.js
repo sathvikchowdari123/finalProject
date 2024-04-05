@@ -5,21 +5,33 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    data: {
+      location: {
+        type: String,
+        required: true
+    },
+    date: {
         type: Date,
         required: true
     },
-    time: {
-        type: String, 
-        required: true
-    },
-    numberOfSeats: {
+     seats: {
         type: Number,
         required: true
     },
-    location: {
-        type: String,
+    filled: {
+        type: Number,  
+        default: 0
+     },
+    starttime: {
+        type: String, 
         required: true
+    },
+    endtime: {
+        type: String, 
+        required: true
+    },
+   
+    description: {
+        type:String,
     }
 });
 

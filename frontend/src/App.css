@@ -88,3 +88,57 @@ form {
   display: flex;
   justify-content:space-evenly;
 }
+
+/* eventpage css */
+.event-body{
+  padding:10px;
+}
+.event-card {
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 3px rgba(0, 0, 0, 0.233);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #f2f2f2;
+  /* Light gray background color */
+  color: #333;
+  /* Dark text color */
+}
+
+.event-card:hover {
+  transform: translateY(-3px);
+  /* Move card slightly up on hover */
+  box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, rgba(46, 86, 219, 1) 0%, rgba(0, 123, 255, 1) 100%);
+    color:white;
+}
+
+
+.event-card p {
+  padding: 0px;
+  /* Increase padding for better readability */
+  margin: 0;
+  /* Remove default margin */
+}
+
+.resource-card:hover{
+  transform: translateY(-5px);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+.resource-card{
+  border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.233);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #f2f2f2;
+    
+    color: #2e2a2a;
+}
+
+.heart-icon-liked{
+  color:red;
+}
+
+.event-button-container{
+  display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}

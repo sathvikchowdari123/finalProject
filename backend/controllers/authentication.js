@@ -8,11 +8,10 @@ import nodemailer from 'nodemailer';
 // POST /api/login
 // Authenticate user
 export const loginHandler = async (req, res) => {
-    console.log('hii')
-    console.log(req.body)
+ 
     
   const { email, password } = req.body;
-  console.log(email)
+
   try {
     // Check if user exists
       const user = await User.findOne({ email });
@@ -22,14 +21,15 @@ export const loginHandler = async (req, res) => {
     }
 
     // Verify password
-    // const isPasswordValid = await bcrypt.compare(password, user.password);
-    // if (!isPasswordValid) {
-    //   return res.status(401).json({ message: 'Invalid credentials' });
-    // }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      console.log('password not verified')
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
 
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, 'your-secret-key', { expiresIn: '1h' });
-console.log('byeee')
+     
     // Return token and user data
     res.status(200).json({ token, user: { id: user._id, email: user.email,role:user.role} });
   } catch (error) {
@@ -56,12 +56,12 @@ console.log(req.body)
     await newUser.save();
      const user = await User.findOne({ email });
     var transporter = nodemailer.createTransport({
-  service: 'outlook',
-  auth: {
-    user: 'sathvikchowdari@jmangroup.com',
-    pass: 'Jman@600113'
-  }
-});
+      service: 'outlook',
+      auth: {
+        user: 'sathvikchowdari@jmangroup.com',
+        pass: 'Jman@600113'
+      }
+    });
 
 var mailOptions = {
   from: 'sathvikchowdari@jmangroup.com',

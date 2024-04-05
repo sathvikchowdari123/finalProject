@@ -3,17 +3,19 @@ import wave from '../assets/wave.jfif'
 import LoginKey from '../assets/Loginkey.png'
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCommentsDollar, faUser } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-import { useRole } from '../context/RoleContext';
+import { useUser } from '../context/UserContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [forgotemail, setForgotEmail] = useState('');
   const [password, setPassword] = useState('');
   const [forgotPassword, setforgotPassword] = useState(false);
-     const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { setUser } = useUser();
     // const { setRole } = useRole();
     // const { role } = useRole();
     // console.log('hiii');
@@ -30,25 +32,33 @@ const LoginPage = () => {
     try {
       console.log(email)
       const response = await axios.post('http://localhost:3001/login', { email, password });
-
+      console.log(response.status)
       console.log('bue')
       if (response.status === 200) {
         console.log('Login successful.');
         const role = response.data.user.role;
         console.log(response.data.user.role);
-          // const userRole = response.data.role;
-        //  setRole(userRole);
+         
+        setUser(response.data.user.email, response.data.user.role);
         if (role === 'user') { navigate(`/home/${role}`); }
         else { navigate(`/auth/${role}`);}
-        
+        toast.success('Login success');
           
         
-      } else {
+      }
+      else {
         console.log('Login failed. Please try again.');
-        
+        toast.error('Login failed. Please try again.');
       }
     } catch (error) {
-      console.error('An error occurred:', error.message);
+      if (error.response && error.response.status === 401) {
+        toast.error('wrong credentials');
+        
+      } else {
+        console.error('An error occurred:', error.message);
+      }
+     
+     
       
     }
 
