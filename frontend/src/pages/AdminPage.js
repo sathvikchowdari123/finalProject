@@ -1,12 +1,24 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import AddResource from '../components/AddResource';
 import AddUser from './AddUser';
 import EventsPage from '../components/EventsPage';
 import EventCreation from './EventCreation'
+import { useNavigate } from 'react-router-dom';
 const AdminPage = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+    // Check if user details are available in local storage
+    const userData = localStorage.getItem('user');
+    console.log('from home page')
+    if (!userData) {
+      // Redirect to login page or another appropriate location if user details are not available
+      console.log('unauthorized access')
+      navigate('/');
+    }
+  }, [navigate]);
   const { role } = useParams();
    const [selectedField, setSelectedField] = useState('events');
  const renderContent = () => {
@@ -23,6 +35,9 @@ const AdminPage = () => {
         return null;
     }
   };
+    if (!localStorage.getItem('user')) {
+    return null;
+  }
   return (
     
     <div>

@@ -40,6 +40,8 @@ const LoginPage = () => {
         console.log(response.data.user.role);
          
         setUser(response.data.user.email, response.data.user.role);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+     
         if (role === 'user') { navigate(`/home/${role}`); }
         else { navigate(`/auth/${role}`);}
         toast.success('Login success');

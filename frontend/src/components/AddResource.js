@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const AddResource = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -21,7 +23,11 @@ const AddResource = () => {
       try {
       // Send data to the server (assuming you're using Axios)
       const response = await axios.post('http://localhost:3001/add-resource', { name, description, type, externalLink, blogContent });
-      console.log('Resource added successfully:', response.data);
+        console.log('Resource added successfully:', response.data);
+        if (response.status === 200) {
+         toast.success('resource added  successfully')
+      }
+     
       
     } catch (error) {
       // Handle error (e.g., display error message)

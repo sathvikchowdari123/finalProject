@@ -2,21 +2,34 @@ import React from 'react'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useUser } from '../context/UserContext';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-
+import { useNavigate } from 'react-router-dom';
 const EventsPage = () => {
   const [events, setEvents] = useState([]);
   const [count, setCount] = useState(0);
   const { userInfo } = useUser();
+  const navigate = useNavigate();
   const [eventsRegistered, seteventsRegistered] = useState([])
   let [eventsLiked,seteventsLiked]=useState([])
-  const role = userInfo.role;
+  
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [likestatus, setlikestatus] = useState(false);
-
+  const user = JSON.parse(localStorage.getItem('user'))
+useEffect(() => {
+    // Check if user details are available in local storage
+  const userData = localStorage.getItem('user');
+  console.log('from events page unauthorized access',userData)
+    if (!userData) {
+      // Redirect to login page or another appropriate location if user details are not available
+      console.log('unauthorized access')
+      navigate('/');
+    }
+  }, []);
+ const role =user.role;
   const handleModalClose = () => {
     setSelectedEvent(null);
     setShowModal(false);
@@ -28,7 +41,7 @@ const EventsPage = () => {
   };
   useEffect(() => {
   
-     console.log(userInfo.email)
+     console.log(user.email)
      const fetchEvents = async () => {
        try {
          const response = await axios.get('http://localhost:3001/fetch-events');
@@ -45,34 +58,35 @@ const EventsPage = () => {
        }
      };
      fetchEvents();
-   }, [count]);
+   }, []);
   
- useEffect(() => {
-  const fetchEventsRegistered = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3001/fetch-events-registered?email=${userInfo.email}`);
+    const fetchEventsRegistered = async () => {
+      try {
+      console.log('from fetchEventsREgistered')
+      const response = await axios.get(`http://localhost:3001/fetch-events-registered?email=${user.email}`);
       if (!response) {
         throw new Error('Failed to fetch events');
       }
       const data = await response.data;
- 
+      console.log('from fetcheventsregistered', data);
       seteventsRegistered(data);
     } catch (error) {
       console.error(error);
     }
   };
-
-  if (userInfo.email) {
-    fetchEventsRegistered();
-  }
-}, [count]);
+      useEffect(() => {
+        if (user.email) {
+          console.log('refresh done')
+          fetchEventsRegistered();
+        }
+      }, []);
   
   
    useEffect(() => {
      const fetchEventsLiked = async () => {
     console.log('fron use effect')
     try {
-      const response = await axios.get(`http://localhost:3001/fetch-events-liked?email=${userInfo.email}`);
+      const response = await axios.get(`http://localhost:3001/fetch-events-liked?email=${user.email}`);
       if (!response) {
         throw new Error('Failed to fetch events');
       }
@@ -84,20 +98,22 @@ const EventsPage = () => {
     }
   };
 
-  if (userInfo.email) {
+  if (user.email) {
     fetchEventsLiked();
   }
-}, []);
+    }, []);
   
   const handleRegisterClick = async (eventId) => {
     
   try {
-    const email = userInfo.email;
+    const email =user.email;
     console.log('type of eventId', typeof eventId);
     const response = await axios.post('http://localhost:3001/user/event-register', { email, eventId });
     if (response.status === 200) {
       console.log('successfully registered');
+       toast.success('successfully registered')
       const event = response.data;
+      fetchEventsRegistered();
       if (event.seats === event.filled) {
         const response = await axios.post('http://localhost:3001/liked-notification-interested', { eventId });
         if (response.status === 200) {
@@ -113,9 +129,7 @@ const EventsPage = () => {
         
     }
     
-    setCount(count+1)
-    console.log("count from events")
-    console.log(count)
+  
   } catch (error) {
     console.error('An error occurred:', error.message);
  }
@@ -168,7 +182,7 @@ const handleUpdateSubmit = async (e) => {
       eventsLiked = eventsLiked.filter(eventId => eventId !== event._id);
     console.log(eventsLiked);
           try {
-    const email = userInfo.email;
+    const email = user.email;
     console.log('from remove')
     const response = await axios.post('http://localhost:3001/event-liked/remove', { email, eventId });
     if (response.status === 200) {
@@ -190,7 +204,7 @@ const handleUpdateSubmit = async (e) => {
       eventsLiked.push(event._id)
       console.log(eventsLiked);
        try {
-    const email = userInfo.email;
+    const email = user.email;
     // console.log('from toggle event liked')
     const response = await axios.post('http://localhost:3001/event-liked', { email, eventId });
     if (response.status === 200) {

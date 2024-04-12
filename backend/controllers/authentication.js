@@ -31,7 +31,7 @@ export const loginHandler = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, 'your-secret-key', { expiresIn: '1h' });
      
     // Return token and user data
-    res.status(200).json({ token, user: { id: user._id, email: user.email,role:user.role} });
+    res.status(200).json({ token, user: { id: user._id, email: user.email,role:user.role,firstname:user.firstname,lastname:user.lastname,username:user.username} });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server Error' });

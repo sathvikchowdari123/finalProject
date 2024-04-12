@@ -4,10 +4,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useUser } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 const Navbar = ({ role, onSelectField }) => { 
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
-   const { userInfo } = useUser();
+  const { userInfo } = useUser();
+  const user = JSON.parse(localStorage.getItem('user'))
+  const [newSkills, setNewSkills] = useState('');
+  
+  const navigate = useNavigate();
+  const handleAddSkills = async () => {
+    const skillsArray = newSkills.split(',');
+    try {
+
+      const response = await axios.post('http://localhost:3001/add-skills', { newSkills: skillsArray,email:user.email });
+      if (response.status === 200) {
+        console.log('skills added successfully');
+        toast.success('skills added')
+       
+  
+      }
+    } catch (error) {
+      console.error('An error occurred:', error.message);
+      toast.error('error')
+ }
+  };
    const handleModalClose = () => {
     setShowModal(false);
   };
@@ -21,11 +45,18 @@ const handleFieldClick = (field) => {
     
     setShowModal(!showModal);
   };
+  const handleLogout = () => {
+  
+  localStorage.clear();
+  
+  
+ navigate('/')
+};
   return (
      <nav className="navbar navbar-expand-lg navbar-expand-md bg-lisht ">
           <div className="container-fluid">
               <button className="navbar-toggler" type="button" onClick={toggleNavbar} >
-          <span className="navbar-toggler-icon" > <FontAwesomeIcon icon={faBars} className='icon' /></span>
+          <span className="navbar-hamburger-icon" > <FontAwesomeIcon icon={faBars} className='icon' /></span>
         </button>
         <a className="navbar-brand" href="/">Learning</a>
         {isOpen && (<span >
@@ -60,7 +91,7 @@ const handleFieldClick = (field) => {
               </li>
             )}
             <li className="nav-item">
-              <a className="nav-link" href="/logout">Logout</a>
+              <a className="nav-link" onClick={handleLogout}>Logout</a>
             </li>
           </ul>
               </div>
@@ -82,9 +113,19 @@ const handleFieldClick = (field) => {
             </button>
           </div>
           <div className="modal-body">
-                  <p>{userInfo.email}</p>
-                  <p>{userInfo.role}</p>
-            <a href="#" target="_blank" rel="noopener noreferrer">Read Full Article</a>
+                  <p>{user.email}</p>
+                  <p>{user.role}</p>
+                  <p>{user.firstname}</p>
+                   <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter your skills separated by commas"
+                  value={newSkills}
+                  onChange={(e) => setNewSkills(e.target.value)}
+                />
+              </div>
+              <button className="btn btn-primary" onClick={handleAddSkills}>Add Skills</button>
           </div>
         </div>
       </div>

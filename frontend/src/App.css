@@ -80,8 +80,11 @@ form {
 .navbar a{
   color:white;
 }
-.navbar-toggler-icon{
-  color:white;
+.navbar span {
+  color: white;
+}
+.navbar-toggle-icon{
+  color:red;
  
 }
 .navbar-middle{
