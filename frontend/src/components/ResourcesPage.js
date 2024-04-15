@@ -32,15 +32,6 @@ console.log('hi from fetch resources')
      fetchResources();
    }, []);
 
-  //   const resources = [
-  //   { type: 'blog', title: 'Blog Post 1', description: 'Description of Blog Post 1', url: 'https://example.com/blogpost1' },
-  //   { type: 'video', title: 'Video Tutorial 1', description: 'Description of Video Tutorial 1', videoUrl: 'https://youtu.be/YXjORp170Lg?si=qpsFpoT1xonePwB-' },
-  //   { type: 'link', title: 'Website 1', description: 'Description of Website 1', websiteUrl: 'https://example.com/website1' },
-  //   { type: 'blog', title: 'Blog Post 2', description: 'Description of Blog Post 2', url: 'https://example.com/blogpost2' },
-  //   // Add more resource data as needed
-  // ];
-
-  // Filter resources based on type
 const blogResources = resources ? resources.filter(resource => resource.type === 'blog') : [];
 const videoResources = resources ? resources.filter(resource => resource.type === 'video') : [];
 const linkResources = resources ? resources.filter(resource => resource.type === 'external') : [];
@@ -59,7 +50,7 @@ const linkResources = resources ? resources.filter(resource => resource.type ===
     return (
    <div className="container">
      
-            <SearchBar onChange={handleSearchChange} />
+            
              
       <h3>Blog Resources</h3>
       {renderResources(blogResources.map((resource, index) => (

@@ -41,6 +41,8 @@ const handleFieldClick = (field) => {
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+
+  
   const toggleModal = () => {
     
     setShowModal(!showModal);
@@ -53,89 +55,142 @@ const handleFieldClick = (field) => {
  navigate('/')
 };
   return (
-     <nav className="navbar navbar-expand-lg navbar-expand-md bg-lisht ">
-          <div className="container-fluid">
-              <button className="navbar-toggler" type="button" onClick={toggleNavbar} >
-          <span className="navbar-hamburger-icon" > <FontAwesomeIcon icon={faBars} className='icon' /></span>
+    <nav className="navbar navbar-expand-lg navbar-expand-md bg-lisht ">
+      <div className="container-fluid">
+        <button className="navbar-toggler" type="button" onClick={toggleNavbar}>
+          <span className="navbar-hamburger-icon">
+            {" "}
+            <FontAwesomeIcon icon={faBars} className="icon" />
+          </span>
         </button>
-        <a className="navbar-brand" href="/">Learning</a>
-        {isOpen && (<span >
-                  <FontAwesomeIcon icon={faUser} className='icon' onClick={toggleModal}/>
-              </span>
-              )}
+        <a className="navbar-brand">
+          Learning
+        </a>
+        {isOpen && (
+          <span>
+            <FontAwesomeIcon
+              icon={faUser}
+              className="icon"
+              onClick={toggleModal}
+            />
+          </span>
+        )}
 
-              <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}  navbar-middle` } id="navbarNav" >
+        <div
+          className={`collapse navbar-collapse ${
+            isOpen ? "show" : ""
+          }  navbar-middle`}
+          id="navbarNav"
+        >
           <ul className="navbar-nav">
-            <li className="nav-item" onClick={() => handleFieldClick('events')}>
-              <span className="nav-link" >Events</span>
+            <li className="nav-item" onClick={() => handleFieldClick("events")}>
+              <span className="nav-link" style={{ cursor: "pointer" }}>
+                Events
+              </span>
             </li>
-            
-            {role === 'admin' && (
-              <li className="nav-item" onClick={() => handleFieldClick('user creation')}>
-             <span className="nav-link" >user creation</span>
+
+            {role === "admin" && (
+              <li
+                className="nav-item"
+                onClick={() => handleFieldClick("user creation")}
+              >
+                <span className="nav-link" style={{ cursor: "pointer" }}>
+                  user creation
+                </span>
               </li>
             )}
-             {role === 'admin' && (
-              <li className="nav-item" onClick={() => handleFieldClick('event creation')}>
-                <span className="nav-link" >event creation</span>
+            {role === "admin" && (
+              <li
+                className="nav-item"
+                onClick={() => handleFieldClick("event creation")}
+              >
+                <span className="nav-link" style={{ cursor: "pointer" }}>
+                  event creation
+                </span>
               </li>
             )}
-            {role === 'admin' && (
-              <li className="nav-item" onClick={() => handleFieldClick('Add Resource')}>
-                <span className="nav-link" >Add Resource</span>
+            {role === "admin" && (
+              <li
+                className="nav-item"
+                onClick={() => handleFieldClick("Add Resource")}
+              >
+                <span className="nav-link" style={{ cursor: "pointer" }}>
+                  Add Resource
+                </span>
               </li>
             )}
-            {role === 'user' && (
-              <li className="nav-item" onClick={() => handleFieldClick('resources')}>
-                <a className="nav-link"> Resources</a>
+            {role === "user" && (
+              <li
+                className="nav-item"
+                onClick={() => handleFieldClick("resources")}
+              >
+                <a className="nav-link" style={{cursor:'pointer'}}> Resources</a>
               </li>
             )}
             <li className="nav-item">
-              <a className="nav-link" onClick={handleLogout}>Logout</a>
+              <a className="nav-link" onClick={handleLogout} style={{cursor:'pointer'}}>
+                Logout
+              </a>
             </li>
           </ul>
-              </div>
-              {!isOpen && (<span >
-                  <FontAwesomeIcon icon={faUser} className='icon' onClick={toggleModal}/>
-              </span>
-              )}
-      </div>
-     {showModal && (
-  <>
-    <div className="modal-backdrop show"></div>
-    <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
-      <div className="modal-dialog" role="document">
-        <div className="modal-content" style={{ color: 'black' }}>
-          <div className="modal-header">
-            <h5 className="modal-title">Profile</h5>
-            <button type="button" className="close" onClick={handleModalClose}>
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div className="modal-body">
-                  <p>{user.email}</p>
-                  <p>{user.role}</p>
-                  <p>{user.firstname}</p>
-                   <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter your skills separated by commas"
-                  value={newSkills}
-                  onChange={(e) => setNewSkills(e.target.value)}
-                />
-              </div>
-              <button className="btn btn-primary" onClick={handleAddSkills}>Add Skills</button>
-          </div>
         </div>
+        {!isOpen && (
+          <span>
+            <FontAwesomeIcon
+              icon={faUser}
+              className="icon"
+              onClick={toggleModal}
+            />
+          </span>
+        )}
       </div>
-    </div>
-  </>
-)}
-
-
+      {showModal && (
+        <>
+          <div className="modal-backdrop show"></div>
+          <div
+            className="modal"
+            tabIndex="-1"
+            role="dialog"
+            style={{ display: "block" }}
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content" style={{ color: "black" }}>
+                <div className="modal-header">
+                  <h5 className="modal-title" style={{cursor:'pointer'}}>Profile</h5>
+                  <button
+                    type="button"
+                    className="close"
+                    onClick={handleModalClose}
+                  >
+                    <span aria-hidden="true" style={{ color: "black" }}>
+                      &times;
+                    </span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <p>Email:{user.email}</p>
+                  <p>Role:{user.role}</p>
+                  <p>Firstname:{user.firstname}</p>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter your skills separated by commas"
+                      value={newSkills}
+                      onChange={(e) => setNewSkills(e.target.value)}
+                    />
+                  </div>
+                  <button className="btn btn-primary" onClick={handleAddSkills}>
+                    Add Skills
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </nav>
-  )
+  );
 }
 
 export default Navbar;

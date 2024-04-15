@@ -83,10 +83,12 @@ const LoginPage = () => {
 
      
       if (response.status === 200) {
+        toast.success('Email sent ')
           console.log('Login successful.');
         
         
       } else {
+        toast.error('try again')
         console.log(' failed. Please try again.');
         
       }
